@@ -12,15 +12,17 @@ struct ContentView: View {
     var fruits: [Fruit] = fruitsData
     
     var body: some View {
-        NavigationView {
-            List {
+        NavigationView(content: {
+            List(content: {
                 ForEach(fruits.shuffled()) { fruit in
-                    FruitRowView(fruit: fruit)
-                        .padding(.vertical, 4)
+                    NavigationLink(destination: FruitDetailView(fruit: fruit)) {
+                        FruitRowView(fruit: fruit)
+                            .padding(.vertical, 4)
+                    }
                 }
-            }
+            })
             .navigationTitle("Fruits")
-        } // NavigationView
+        }) // NavigationView
     }
 }
 
