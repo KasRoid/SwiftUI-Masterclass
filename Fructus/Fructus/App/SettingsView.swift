@@ -33,6 +33,17 @@ struct SettingsView: View {
                              })
                     // MARK: - Section 2
                     // MARK: - Section 3
+                    GroupBox(label: SettingsLabelView(labelText: "Application", labelImage: "apps.iphone"),
+                             content: {
+                                SettingsRowView(name: "Developer", content: "Kas")
+                                SettingsRowView(name: "Designer", content: "Robert Petras")
+                                SettingsRowView(name: "Compatibility", content: "iOS 14")
+                                SettingsRowView(name: "Website", linkLabel: "SwiftUI Masterclass", linkDestination: "swiftuimasterclass.com")
+                                SettingsRowView(name: "Twitter", linkLabel: "@RobertPetras", linkDestination: "twitter.com/robertpetras")
+                                SettingsRowView(name: "SwiftUI", content: "2.0")
+                                SettingsRowView(name: "Version", content: "1.1.0")
+                             }
+                    )
                 } // VStack
                 .navigationBarTitle(Text("Setting"), displayMode: .large)
                 .navigationBarItems(trailing: Button(action: { presentationMode.wrappedValue.dismiss() },
@@ -47,6 +58,7 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
+            .previewDevice("iPhone 12 Pro")
             .preferredColorScheme(.dark)
     }
 }
