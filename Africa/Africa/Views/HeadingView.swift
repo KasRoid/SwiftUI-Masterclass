@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HeadingView: View {
-    
     // MARK: - Properties
     var headingImage: String
     var headingText: String
@@ -19,7 +18,7 @@ struct HeadingView: View {
             Image(systemName: headingImage)
                 .foregroundColor(.accentColor)
                 .imageScale(.large)
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            Text(headingText)
                 .font(.title3)
                 .fontWeight(.bold)
         }

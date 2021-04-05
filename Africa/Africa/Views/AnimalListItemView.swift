@@ -1,5 +1,5 @@
 //
-//  AnimalListITemView.swift
+//  AnimalListItemView.swift
 //  Africa
 //
 //  Created by Kas Song on 2021/04/02.
@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct AnimalListITemView: View {
-    
+struct AnimalListItemView: View {
     // MARK: - Properties
     let animal: Animal
     
@@ -40,7 +39,7 @@ struct AnimalListITemView_Previews: PreviewProvider {
     
     static let animals: [Animal] = Bundle.main.decode("animal.json")
     static var previews: some View {
-        AnimalListITemView(animal: animals[1])
+        AnimalListItemView(animal: animals[1])
             .previewLayout(.sizeThatFits)
             .padding()
     }
