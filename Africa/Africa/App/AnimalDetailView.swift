@@ -11,7 +11,6 @@ struct AnimalDetailView: View {
     // MARK: - Properties
     let animal: Animal
     
-    
     // MARK: - Body
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
@@ -74,6 +73,7 @@ struct AnimalDetailView: View {
     }
 }
 
+// MARK: - PreviewProvider
 struct AnimalDetailView_Previews: PreviewProvider {
     static let animals: [Animal] = Bundle.main.decode("animals.json")
     
