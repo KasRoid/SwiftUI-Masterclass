@@ -16,17 +16,7 @@ struct VideoListView: View {
     // MARK: - Body
     var body: some View {
         NavigationView {
-            List {
-                ForEach(videos) { item in
-                    NavigationLink(
-                        destination: VideoPlayerView(videoSelected: item.id, videoTitle: item.name),
-                        label: {
-                            VideoListItemView(video: item)
-                                .padding(.vertical, 8)
-                        })
-                }
-            }
-            .listStyle(InsetGroupedListStyle())
+            createList()
             .navigationBarTitle("Videos", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -35,6 +25,22 @@ struct VideoListView: View {
                 }
             }
         }
+    }
+}
+
+extension VideoListView {
+    private func createList() -> some View {
+        List {
+            ForEach(videos) { item in
+                NavigationLink(
+                    destination: VideoPlayerView(videoSelected: item.id, videoTitle: item.name),
+                    label: {
+                        VideoListItemView(video: item)
+                            .padding(.vertical, 8)
+                    })
+            }
+        }
+        .listStyle(InsetGroupedListStyle())
     }
 }
 
