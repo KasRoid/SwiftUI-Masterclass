@@ -23,23 +23,67 @@ struct MapView: View {
     // MARK: - Body
     var body: some View {
         // Basic Map
-//        Map(coordinateRegion: $region)
+        //        Map(coordinateRegion: $region)
         // Advanced Map
         Map(coordinateRegion: $region,
             annotationItems: locations,
             annotationContent: { item in
                 // Pin: Old Style (always static)
-//                MapPin(coordinate: item.location, tint: .accentColor)
+                //                MapPin(coordinate: item.location, tint: .accentColor)
                 // Marker: New Style (always static)
-//                MapMarker(coordinate: item.location, tint: .accentColor)
+                //                MapMarker(coordinate: item.location, tint: .accentColor)
                 // Custom Basic Annotation (interactive)
+                //                MapAnnotation(coordinate: item.location, content: {
+                //                    Image("logo")
+                //                        .resizable()
+                //                        .scaledToFit()
+                //                        .frame(width: 32, height: 32, alignment: .center)
+                //                })
+                // Custom Advanced Annotation (Interactive)
                 MapAnnotation(coordinate: item.location, content: {
-                    Image("logo")
+                    MapAnnotationView(location: item)
+                })
+            })
+            .overlay(
+                HStack(alignment: .center, spacing: 12, content: {
+                    Image("compass")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 32, height: 32, alignment: .center)
+                        .frame(width: 48, height: 48, alignment: .center)
+                    
+                    VStack(alignment: .leading, spacing: 3) {
+                        HStack {
+                            Text("Latitude:")
+                                .font(.footnote)
+                                .fontWeight(.bold)
+                                .foregroundColor(.accentColor)
+                            Spacer()
+                            Text("\(region.center.latitude)")
+                                .font(.footnote)
+                                .foregroundColor(.white)
+                        }
+                        Divider()
+                        HStack {
+                            Text("Longitude:")
+                                .font(.footnote)
+                                .fontWeight(.bold)
+                                .foregroundColor(.accentColor)
+                            Spacer()
+                            Text("\(region.center.longitude)")
+                                .font(.footnote)
+                                .foregroundColor(.white)
+                        }
+                    }
                 })
-        })
+                .padding(.vertical, 12)
+                .padding(.horizontal, 16)
+                .background(Color.black
+                                .cornerRadius(8)
+                                .opacity(0.6)
+                )
+                .padding(),
+                alignment: .top
+            )
     }
 }
 
