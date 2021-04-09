@@ -71,6 +71,8 @@ extension ContentView {
                 NavigationLink(destination: AnimalDetailView(animal: animal),
                                label: { AnimalListItemView(animal: animal) })
             }
+                CreditsView()
+                    .modifier(CenterModifier())
         }
     }
     private func createScrollView() -> some View {
@@ -111,5 +113,6 @@ extension ContentView {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .previewDevice("iPhone 12 Pro")
     }
 }
