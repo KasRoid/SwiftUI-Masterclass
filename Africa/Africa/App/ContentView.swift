@@ -11,7 +11,6 @@ struct ContentView: View {
     // MARK: - Properties
     let animals: [Animal] = Bundle.main.decode("animals.json")
     let haptics = UIImpactFeedbackGenerator(style: .medium)
-//    let gridLayout: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
     
     @State private var isGridViewActive = false
     @State private var gridLayout: [GridItem] = [GridItem(.flexible())]
@@ -23,54 +22,17 @@ struct ContentView: View {
         NavigationView {
             Group {
                 if !isGridViewActive {
-                    List {
-                        CoverImageView()
-                            .frame(height: 300)
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                        ForEach(animals) { animal in
-                            NavigationLink(destination: AnimalDetailView(animal: animal),
-                                           label: { AnimalListItemView(animal: animal) })
-                        }
-                    }
+                    createListView()
                 } else {
-                    ScrollView(.vertical, showsIndicators: false) {
-                        LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
-                            ForEach(animals) { animal in
-                                NavigationLink(
-                                    destination: AnimalDetailView(animal: animal),
-                                    label: {
-                                        AnimalGridItemView(animal: animal)
-                                    })
-                            }
-                        }
-                        .padding(10)
-                        .animation(.easeIn)
-                    }
+                    createScrollView()
                 }
             }
             .navigationBarTitle("Africa", displayMode: .large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack(spacing: 16) {
-                        Button(action: {
-                            print("List view is activated")
-                            isGridViewActive = false
-                            haptics.impactOccurred()
-                        }) {
-                            Image(systemName: "square.fill.text.grid.1x2")
-                                .font(.title2)
-                                .foregroundColor(isGridViewActive ? .primary : .accentColor)
-                        }
-                        Button(action: {
-                            print("Grid view is activated")
-                            isGridViewActive = true
-                            haptics.impactOccurred()
-                            gridSwitch()
-                        }) {
-                            Image(systemName: toolbarIcon)
-                                .font(.title2)
-                                .foregroundColor(isGridViewActive ? .accentColor : .primary)
-                        }
+                        createToolBarButton(isGridButton: false, imageName: "square.fill.text.grid.1x2")
+                        createToolBarButton(isGridButton: true, imageName: toolbarIcon)
                     }
                 }
             }
@@ -95,6 +57,53 @@ extension ContentView {
         default:
             toolbarIcon = "square.grid.2x2"
         }
+    }
+}
+
+// MARK: - UI
+extension ContentView {
+    private func createListView() -> some View {
+        List {
+            CoverImageView()
+                .frame(height: 300)
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+            ForEach(animals) { animal in
+                NavigationLink(destination: AnimalDetailView(animal: animal),
+                               label: { AnimalListItemView(animal: animal) })
+            }
+        }
+    }
+    private func createScrollView() -> some View {
+        ScrollView {
+            LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
+                ForEach(animals) { animal in
+                    NavigationLink(
+                        destination: AnimalDetailView(animal: animal),
+                        label: {
+                            AnimalGridItemView(animal: animal)
+                        })
+                }
+            }
+            .padding(10)
+            .animation(.easeIn)
+        }
+    }
+    private func createToolBarButton(isGridButton: Bool, imageName: String) -> some View {
+        Button(
+            action: {
+                isGridViewActive = isGridButton
+                haptics.impactOccurred()
+                if isGridButton {
+                    gridSwitch()
+                }
+            },
+            label: {
+                let color: Color = isGridButton ? (isGridViewActive ? .accentColor : .primary) : (isGridViewActive ? .primary : .accentColor)
+                Image(systemName: imageName)
+                    .font(.title2)
+                    .foregroundColor(color)
+            }
+        )
     }
 }
 
