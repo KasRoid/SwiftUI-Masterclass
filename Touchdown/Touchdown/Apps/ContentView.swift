@@ -25,6 +25,7 @@ struct ContentView: View {
                     VStack(spacing: 10) {
                         FeaturedTabView()
                             .padding(.vertical, 20)
+                        CategoryGridView()
                         FooterView()
                             .padding(.horizontal)
                     }
