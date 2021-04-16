@@ -35,7 +35,11 @@ struct NewTaskItemView: View {
                     )
                     .cornerRadius(10)
                 Button(
-                    action: { addItem() },
+                    action: {
+                        addItem()
+                        playSound(sound: "sound-ding", type: "mp3")
+                        feedback.notificationOccurred(.success)
+                    },
                     label: {
                         Spacer()
                         Text("SAVE")
@@ -47,6 +51,11 @@ struct NewTaskItemView: View {
                     .background(isButtonDisabled ? Color.blue : Color.pink)
                     .cornerRadius(10)
                     .disabled(isButtonDisabled)
+                    .onTapGesture {
+                        if isButtonDisabled {
+                            playSound(sound: "sound-tap", type: "mp3")
+                        }
+                    }
             }
             .padding(.horizontal)
             .padding(.vertical, 20)

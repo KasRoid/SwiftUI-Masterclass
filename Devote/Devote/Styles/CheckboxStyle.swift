@@ -15,7 +15,13 @@ struct CheckboxStyle: ToggleStyle {
             Image(systemName: configuration.isOn ? "checkmark.circle.fill" : "circle")
                 .foregroundColor(configuration.isOn ? .pink : .primary)
                 .font(.system(size: 30, weight: .semibold, design: .rounded))
-                .onTapGesture { configuration.isOn.toggle() }
+                .onTapGesture {
+                    configuration.isOn.toggle()
+                    configuration.isOn
+                        ? playSound(sound: "sound-rise", type: "mp3")
+                        : playSound(sound: "sound-tap", type: "mp3")
+                    feedback.notificationOccurred(.success)
+                }
             configuration.label
         }
     }
